@@ -121,7 +121,7 @@ public class Sketch extends PApplet {
     fill(0, 0, 255);
     ellipse(fltCircleX, fltCircleY, 15, 15);
 
-    // Collision detection for player
+    // Collision detection for player. For ex: if players move to the bottom of the screen, the player will come out of the top. 
     if (fltCircleX + 15 <= 0) {
       fltCircleX = width;
     } else if (fltCircleX - 15 >= width) {
