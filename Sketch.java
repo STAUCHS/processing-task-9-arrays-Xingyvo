@@ -8,9 +8,10 @@ public class Sketch extends PApplet {
   boolean[] blnHideStatus = new boolean[42];
   int snowDiameter = 20;
 
-  // Set x and y coordinates for circle
+  // Set variables for circle
   float fltCircleX = 20;
   float fltCircleY = 380;
+  float fltCircleSize = 15;
 
   // Intialize the number of lives for the player
   int intLives = 3;
@@ -46,10 +47,7 @@ public class Sketch extends PApplet {
 
     if (!blnGameOver) {
       // Shows lives
-      for (int count = 1; count <= intLives; count++) {
-        fill(139, 0, 0);
-        rect(width - count * 30, height - 395, width / 16, height / 16);
-      }
+      lives();
 
       // Draw snow and circle
       snow(); 
@@ -75,6 +73,9 @@ public class Sketch extends PApplet {
   }
   
   // All other defined methods are written below:
+  /**
+   * A method that draws the snowflakes falling down the screen. Snow speed can be controlled and snowflakes can disappear when clicked on
+   */
   public void snow() {
     for (int i = 0; i < snowX.length; i++) {
       if (!blnHideStatus[i]) {
@@ -92,14 +93,14 @@ public class Sketch extends PApplet {
 
         // Check if snowflake is clicked
         if (mousePressed) {
-          if (mouseX >= snowX[i] - 20 && mouseX <= snowX[i] + 20 && mouseY >= snowY[i] - 20 && mouseY <= snowY[i] + 20) {
+          if (dist(snowX[i], snowY[i], mouseX, mouseY) < snowDiameter / 2) {
             // Hide snow
             blnHideStatus[i] = true; 
           }
         }  
 
         // If player collides with a snowflake, hide the snow flake and remove a life
-        if (fltCircleX >= snowX[i] - 20 && fltCircleX <= snowX[i] + 20 && fltCircleY >= snowY[i] - 20 && fltCircleY <= snowY[i] + 20) {
+        if (dist(snowX[i], snowY[i], fltCircleX, fltCircleY) < snowDiameter / 2 + fltCircleSize / 2) {
           blnHideStatus[i] = true;
           intLives--;
           if (intLives <= 0) {
@@ -116,10 +117,12 @@ public class Sketch extends PApplet {
     }
   }
 
-  // Draw a blue circle
+  /**
+   * A method that draws a circle, with collision detection, that acts as the player
+   */
   public void player() {
     fill(0, 0, 255);
-    ellipse(fltCircleX, fltCircleY, 15, 15);
+    ellipse(fltCircleX, fltCircleY, fltCircleSize, fltCircleSize);
 
     // Collision detection for player. For ex: if players move to the bottom of the screen, the player will come out of the top. 
     if (fltCircleX + 15 <= 0) {
@@ -130,6 +133,16 @@ public class Sketch extends PApplet {
       fltCircleY = height;
     } else if (fltCircleY - 15 >= height) {
       fltCircleY = 0;
+    }
+  }
+
+  /**
+   * A method that shows the number of lives for the player
+   */
+  public void lives() {
+    for (int count = 1; count <= intLives; count++) {
+      fill(139, 0, 0);
+      rect(width - count * 30, height - 395, width / 16, height / 16);
     }
   }
 
