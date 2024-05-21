@@ -1,5 +1,10 @@
 import processing.core.PApplet;
-
+/**
+* A program Sketch.java that makes a minigame. It draws snowflakes falling down the screen and the player (the blue circle) has
+* to dodge the snowflakes. If it player loses all of its three lives, the game ends. Speed of the snowflakes can be controlled
+* with the up and down arrow and snowflakes can be destroyed when clicked on. 
+* @author: B. Yu
+*/
 public class Sketch extends PApplet {
 
   // Related arrays for the (x, y) coordinates of the snowflakes
